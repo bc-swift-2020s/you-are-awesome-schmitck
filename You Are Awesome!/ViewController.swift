@@ -7,6 +7,7 @@
 //
 
 import UIKit
+// bogus comment
 
 class ViewController: UIViewController {
     @IBOutlet weak var messageLable: UILabel!
