@@ -9,6 +9,8 @@
 import UIKit
 // bogus comment
 
+// yet another bogus comment
+
 class ViewController: UIViewController {
     @IBOutlet weak var messageLable: UILabel!
     @IBOutlet weak var imageView: UIImageView!
