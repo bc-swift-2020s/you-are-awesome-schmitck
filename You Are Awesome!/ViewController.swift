@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 // bogus comment
 
 // yet another bogus comment
@@ -18,6 +19,7 @@ class ViewController: UIViewController {
     var imageNumber = 1000
     var messageNumber = 1000
     let totalNumberOfImages = 9
+    var audioPlayer = AVAudioPlayer()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,8 +41,21 @@ class ViewController: UIViewController {
              newImageNumber = Int.random(in: 1...totalNumberOfImages)
         } while imageNumber == newImageNumber
         imageNumber = newImageNumber
-        
         imageView.image = UIImage(named: "image\(imageNumber)")
+        
+        if let sound = NSDataAsset(name: "sound1") {
+            do {
+                try audioPlayer = AVAudioPlayer(data: sound.data)
+                audioPlayer.play()
+            } catch {
+                print("😖 Error! \(error.localizedDescription) Could not initialize AVAudioPlayer!")
+            }
+        } else {
+            print("😖 Error! Could not read data!")
+        }
+        
+        
+        
     }
     
 }
