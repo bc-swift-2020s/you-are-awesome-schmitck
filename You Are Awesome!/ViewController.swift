@@ -18,32 +18,19 @@ class ViewController: UIViewController {
     
     var imageNumber = 1000
     var messageNumber = 1000
+    var soundNumber = -1
     let totalNumberOfImages = 9
+    let totalNumberOfSounds = 6
     var audioPlayer = AVAudioPlayer()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         messageLable.text = ""
     }
-
-    @IBAction func messageButtonPressed(_ sender: UIButton) {
-        let messageArray = ["You are Awesome!", "You Rock!", "You are the best!", "You the man!", "When the Genuius Bar needs someone, they call you!"]
-        var newMessageNumber: Int
-       repeat {
-            newMessageNumber = Int.random(in: 1...messageArray.count-1)
-        } while messageNumber == newMessageNumber
+    
+    func playSound(name: String) {
         
-        messageNumber = newMessageNumber
-        messageLable.text = messageArray[messageNumber]
-        
-        var newImageNumber: Int
-        repeat {
-             newImageNumber = Int.random(in: 1...totalNumberOfImages)
-        } while imageNumber == newImageNumber
-        imageNumber = newImageNumber
-        imageView.image = UIImage(named: "image\(imageNumber)")
-        
-        if let sound = NSDataAsset(name: "sound1") {
+        if let sound = NSDataAsset(name: name ) {
             do {
                 try audioPlayer = AVAudioPlayer(data: sound.data)
                 audioPlayer.play()
@@ -53,8 +40,29 @@ class ViewController: UIViewController {
         } else {
             print("😖 Error! Could not read data!")
         }
+        }
+    
+    func nonRepeatingRandom(orignalNumber: Int, upperLimit: Int) -> Int {
+            var newNumber: Int
+            repeat{
+                newNumber = Int.random(in: 0...upperLimit)
+            } while orignalNumber == newNumber
+             return newNumber
+        }
         
+    
+    
+    @IBAction func messageButtonPressed(_ sender: UIButton) {
+        let messageArray = ["You are Awesome!", "You Rock!", "You are the best!", "You the man!", "When the Genuius Bar needs someone, they call you!"]
         
+        messageNumber = nonRepeatingRandom(orignalNumber: messageNumber, upperLimit: messageArray.count-1)
+        messageLable.text = messageArray[messageNumber]
+        
+       imageNumber = nonRepeatingRandom(orignalNumber: imageNumber, upperLimit: totalNumberOfImages-1)
+        imageView.image = UIImage(named: "image\(imageNumber)")
+    
+        soundNumber = nonRepeatingRandom(orignalNumber: soundNumber, upperLimit: totalNumberOfSounds-1)
+        playSound(name: "sound\(soundNumber)")
         
     }
     
